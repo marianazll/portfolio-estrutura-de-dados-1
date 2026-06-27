@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct no {
+    char pagina[100];
+    struct no *prox;
+} No;
+
+typedef struct {
+    No *topo;
+} Pilha;
+
+Pilha* criarPilha() {
+    Pilha *p = (Pilha*) malloc(sizeof(Pilha));
+    p->topo = NULL;
+    return p;
+}
+
+void push(Pilha *p, char pagina[]) {
+    No *novo = (No*) malloc(sizeof(No));
+
+    strcpy(novo->pagina, pagina);
+    novo->prox = p->topo;
+    p->topo = novo;
+}
+
+void pop(Pilha *p) {
+    if (p->topo == NULL) {
+        printf("Historico vazio.\n");
+        return;
+    }
+
+    No *aux = p->topo;
+
+    printf("Voltando da pagina: %s\n", aux->pagina);
+
+    p->topo = aux->prox;
+
+    free(aux);
+}
+
+void mostrarHistorico(Pilha *p) {
+    No *aux = p->topo;
+
+    printf("\nHistorico de navegacao:\n");
+
+    while (aux != NULL) {
+        printf("%s\n", aux->pagina);
+        aux = aux->prox;
+    }
+}
+
+int main() {
+    Pilha *historico = criarPilha();
+
+    push(historico, "Google");
+    push(historico, "YouTube");
+    push(historico, "GitHub");
+    push(historico, "Moodle");
+
+    mostrarHistorico(historico);
+
+    printf("\nAcionando o botao voltar:\n");
+    pop(historico);
+
+    mostrarHistorico(historico);
+
+    return 0;
+}
