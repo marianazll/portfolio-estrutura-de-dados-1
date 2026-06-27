@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+#define TAM 5
+
+int fila[TAM];
+int inicio = 0;
+int fim = -1;
+int quantidade = 0;
+
+void inserir(int valor) {
+    if (quantidade == TAM) {
+        printf("Fila cheia!\n");
+        return;
+    }
+
+    fim++;
+    fila[fim] = valor;
+    quantidade++;
+
+    printf("Elemento inserido com sucesso!\n");
+}
+
+void primeiroElemento() {
+    if (quantidade == 0) {
+        printf("Fila vazia!\n");
+        return;
+    }
+
+    printf("Primeiro elemento da fila: %d\n", fila[inicio]);
+}
+
+int main() {
+    inserir(10);
+    inserir(20);
+    inserir(30);
+
+    primeiroElemento();
+
+    return 0;
+}
